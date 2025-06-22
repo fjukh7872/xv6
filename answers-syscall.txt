@@ -1,0 +1,6 @@
+usertrap() in kernel/trap.c, in line 67 called syscall.
+the value is 7, which represents usertrap called syscall to use sys_exec.
+$sstatus = 0x22 so its eight bit, the SPP, is 0, which means the CPU was is user mode.
+the kernel is panicking at: lw	a3,0(zero), and a3 is the corresponding register for num, which we try to load what is at address zero into it.
+the kernel crashes because it tries to access the address 0 which isn't mapped in its virtual memory. this is confirmed by scause = 0xd = 14 which means load page fault.
+the process name is "initcode\0\0\0\0\0\0\0" and its pid is 1.
